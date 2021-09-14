@@ -1,0 +1,70 @@
+		// var text = new fabric.Text("Hello, World", { left: 100, top: 100 })
+
+		// canvas.add(text)
+
+		/*
+		const addIText = (c: fabric.Canvas) => {
+			const iText = new fabric.IText("Hello World", {
+				left: 10,
+				top: 10,
+				lockUniScaling: true,
+				editable: true, // for when someone else did it
+				selectable: true, // for when someone else did it
+				// fontFamily:
+				// fontSize:
+				lockRotation: true,
+				lockScalingX: true,
+				lockScalingY: true,
+				lockSkewingX: true,
+				lockSkewingY: true,
+				hasControls: false,
+			})
+
+			iText.on("selected", () => {
+				console.log("selected")
+			})
+
+			iText.on("mousedown", (options) => {
+				if (options.target)
+					console.log(
+						`mousedown x: ${options.target.left}, y: ${options.target.top}`
+					)
+			})
+
+			iText.on("mouseup", (options) => {
+				if (options.target)
+					console.log(
+						`mouseup x: ${options.target.left}, y: ${options.target.top}`
+					)
+				// @ts-expect-error
+				if (options.transform.actionPerformed !== null) {
+					console.log("Action Performed.")
+				}
+			})
+
+			iText.on("editing:entered", (options) => {
+				console.log("Editing Entered.")
+			})
+
+			iText.on("editing:exited", (options) => {
+				console.log("Editing exited.")
+				console.log(iText.text)
+			})
+
+			// iText.on("event: changed", (options) => {
+			// 	console.log("event: changed.")
+			// })
+
+			// iText.on("selection: changed", (options) => {
+			// 	console.log("selection: changed.")
+			// })
+
+			iText.on("moved", () => {
+				console.log("moved")
+			})
+
+			c.add(iText)
+
+			// setCanvas(c)
+		}
+		*/
