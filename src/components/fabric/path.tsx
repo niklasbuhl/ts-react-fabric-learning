@@ -1,4 +1,5 @@
 import { fabric } from "fabric"
+import checkViewportBoundaries from "./functions/checkViewportBoundaries"
 
 interface IPathInfo {
 	pathStr: string | undefined
@@ -43,34 +44,34 @@ export const pathArrayToString = (pathArray: fabric.Path.path): string => {
 	return str
 }
 
-const editPath = (path: fabric.Path) => {
+const editPath = (canvas: fabric.Canvas, path: fabric.Path) => {
 	// Edit Appearance
 	path.hasControls = false
 	path.stroke = "#000000"
 	path.strokeWidth = 4
 	path.strokeLineCap = "square"
+	path.perPixelTargetFind = true
 
 	/*
   opt.path.strokeDashArray = [10, 5]
   opt.path.strokeDashOffset = 2
   opt.path.cornerStyle = "rect"
   opt.path.cornerSize = 10
-  opt.path.perPixelTargetFind = true
   opt.path.strokeUniform = true		
   */
 
 	// Moved
-	path.on("moved", (obj) => {
+	path.on("moved", () => {
 		// console.log("Path is moved...")
-		if (obj.target) {
-			// @ts-expect-error
-			const pathInfo = getPathInfo(obj.target)
 
-			console.log(`Moved Path - pX: ${pathInfo.pX}, pY: ${pathInfo.pY}.`)
-			console.log(`Moved Path - path: ${pathInfo.pathStr}`)
+		checkViewportBoundaries(canvas, path)
 
-			console.log("TODO Upload changes to backend.")
-		}
+		const pathInfo = getPathInfo(path)
+
+		console.log(`Moved Path - pX: ${pathInfo.pX}, pY: ${pathInfo.pY}.`)
+		console.log(`Moved Path - path: ${pathInfo.pathStr}`)
+
+		console.log("TODO Upload changes to backend.")
 	})
 
 	// Mousedown
@@ -108,7 +109,7 @@ export const addPath = (canvas: fabric.Canvas, pathStr: string) => {
 		fill: false,
 	})
 
-	editPath(path)
+	editPath(canvas, path)
 
 	canvas.add(path)
 }

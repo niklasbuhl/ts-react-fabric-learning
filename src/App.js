@@ -6,8 +6,10 @@ function App() {
   return (
     <div className="App">
       <ToolContextProvider>
-        <ToolBox />
-        <Canvas />
+        <div className="d-flex container flex-column">
+          <ToolBox />
+          <Canvas />
+        </div>
       </ToolContextProvider>
     </div>
   )

@@ -1,11 +1,12 @@
-import Coordinates from "../../types/coordinates"
+import Coords from "../../types/coords"
 import { fabric } from "fabric"
-import testImage from "./testImage"
+import testImageURL from "./functions/testImageURL"
+import checkViewportBoundaries from "./functions/checkViewportBoundaries"
 
 const addImageURL = async (
 	canvas: fabric.Canvas,
 	url: string,
-	position: Coordinates,
+	position: Coords,
 	_id?: string | undefined,
 	fromBackend?: boolean
 ) => {
@@ -13,7 +14,7 @@ const addImageURL = async (
 	console.log(url)
 
 	try {
-		await testImage(url)
+		await testImageURL(url)
 
 		fabric.Image.fromURL(
 			url,
@@ -25,23 +26,22 @@ const addImageURL = async (
 				img._id = _id
 
 				// Moved
-				img.on("moved", (opt) => {
-					if (opt.target) {
-						var x = opt.target.left
-						var y = opt.target.top
-						console.log(`Image move pX: ${x}, pY: ${y}`)
-						console.log("TODO Send update to backend...")
-					}
+				img.on("moved", () => {
+					checkViewportBoundaries(canvas, img)
+
+					const x = img.left
+					const y = img.top
+
+					console.log(`Image move pX: ${x}, pY: ${y}`)
+					console.log("TODO Send update to backend...")
 				})
 
 				// Scaled
-				img.on("scaled", (opt) => {
-					if (opt.target) {
-						var scaleX = opt.target.scaleX
-						var scaleY = opt.target.scaleY
-						console.log(`Image scale sX: ${scaleX}, sY: ${scaleY}`)
-						console.log("TODO Send update to backend...")
-					}
+				img.on("scaled", () => {
+					var scaleX = img.scaleX
+					var scaleY = img.scaleY
+					console.log(`Image scale sX: ${scaleX}, sY: ${scaleY}`)
+					console.log("TODO Send update to backend...")
 				})
 
 				// Mouse Up

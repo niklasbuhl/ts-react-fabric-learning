@@ -1,7 +1,7 @@
 // https://stackoverflow.com/questions/9714525/javascript-image-url-verify
 // https://jsfiddle.net/jfriend00/vhtzghkd/
 
-function testImage(url: string, timeoutT?: any) {
+function testImageURL(url: string, timeoutT?: any) {
 	return new Promise(function (resolve, reject) {
 		var timeout = timeoutT || 5000
 		var timer: any
@@ -25,4 +25,4 @@ function testImage(url: string, timeoutT?: any) {
 	})
 }
 
-export default testImage
+export default testImageURL

@@ -2,15 +2,68 @@ import { fabric } from "fabric"
 // import Popup from "reactjs-popup"
 // import { Options } from "pretty-format"
 import { useContext, useEffect, useState } from "react"
-import addImageURL from "./addImage"
+import addImageURL from "./image"
 // import canvasContext from "./canvasContext"
-import addIText from "./addIText"
+import addIText from "./iText"
 import editPath, { addPath } from "./path"
 import { Tool, ToolContext } from "./toolContext"
 
 const Canvas = () => {
 	const [canvas, setCanvas] = useState<fabric.Canvas>()
 	const { tool, setTool } = useContext(ToolContext)
+	// const { isLoggedIn } = useContext(contextValue)
+
+	// Initialize
+	useEffect(() => {
+		console.log("Initialize Canvas.")
+
+		const initCanvas = () =>
+			new fabric.Canvas("canvas", {
+				width: 1296,
+				height: 768,
+				backgroundColor: "white",
+				// isDrawingMode: true,
+				selection: false,
+				stateful: true,
+				selectionBorderColor: "gray",
+				selectionColor: "lightgray",
+			})
+
+		var c = initCanvas()
+
+		// Path
+		c.on("path:created", (opt) => {
+			// @ts-expect-error
+			if (opt.path) {
+				// @ts-expect-error
+				editPath(c, opt.path)
+
+				/*
+				// @ts-expect-error
+				uploadPath(opt.path)
+				*/
+			}
+		})
+
+		setCanvas(c)
+
+		// View Port Boundaries for checking if objects are dragged outside.
+		// console.log(c.calcViewportBoundaries())
+	}, [])
+
+	// Lock Canvas if not logged in
+	/*
+	useEffect(() => {
+
+		if(!isLoggedIn) {
+			canvas.interactive = false
+		} else {
+			canvas.interactive = true
+		}
+
+
+	}, [isLoggedIn, canvas])
+	*/
 
 	// Tool Action
 	useEffect(() => {
@@ -88,51 +141,6 @@ const Canvas = () => {
 		setTool(Tool.Edit)
 	}, [tool, setTool, canvas])
 
-	// Initialize
-	useEffect(() => {
-		console.log("Initialize Canvas.")
-
-		const initCanvas = () =>
-			new fabric.Canvas("canvas", {
-				height: 800,
-				width: 800,
-				backgroundColor: "pink",
-				// isDrawingMode: true,
-				selection: false,
-				stateful: true,
-			})
-
-		var c = initCanvas()
-
-		// Add Mouse Down
-		c.on("mouse:down", (options) => {
-			// console.log(options.e.clientX, options.e.clientY)
-
-			if (options.target) {
-				// console.log("an object was clicked! ", options.target.type)
-			}
-		})
-
-		c.on("path:created", (opt) => {
-			// console.log(opt)
-
-			// @ts-expect-error
-			if (opt.path) {
-				// @ts-expect-error
-				editPath(opt.path)
-
-				// @ts-expect-error
-				uploadPath(opt.path)
-			}
-		})
-
-		// Add Mouse Move
-
-		// Add Mouse Up
-
-		setCanvas(c)
-	}, [])
-
 	// Add Test Items
 	useEffect(() => {
 		// Test Items
@@ -177,7 +185,7 @@ const Canvas = () => {
 		// if (canvas) console.log(canvas.getObjects())
 	}, [canvas])
 
-	return <canvas id="canvas"></canvas>
+	return <canvas className="border border-secondary" id="canvas"></canvas>
 }
 
 export default Canvas

@@ -1,10 +1,11 @@
 import { fabric } from "fabric"
-import Coordinates from "../../types/coordinates"
+import Coords from "../../types/coords"
+import checkViewportBoundaries from "./functions/checkViewportBoundaries"
 
 const addIText = (
 	canvas: fabric.Canvas,
 	text: string,
-	position: Coordinates,
+	position: Coords,
 	_id: string | undefined,
 	fromBackend: boolean
 ) => {
@@ -34,43 +35,42 @@ const addIText = (
 	// 	console.log("selected")
 	// })
 
-	t.on("mousedown", (options) => {
-		if (options.target) {
-			const xy: Coordinates = {
-				x: options.target.left as number,
-				y: options.target.top as number,
-			}
-
-			// @ts-expect-error
-			t.vwb_currentPosition = xy
-
-			// console.log(
-			// 	`mousedown x: ${options.target.left}, y: ${options.target.top}`
-			// )
+	t.on("mousedown", () => {
+		const xy: Coords = {
+			x: t.left as number,
+			y: t.top as number,
 		}
-	})
 
-	t.on("moved", (opt) => {
-		// console.log("moved")
 		// @ts-expect-error
-		t.vwb_moved = true
+		t.vwb_currentPosition = xy
 
-		if (opt.target) {
-			var pX = opt.target.left
-			var pY = opt.target.top
-			console.log(`Text Moved - pX: ${pX}, pY: ${pY}`)
-			console.log("TODO Send new position to backend...")
-		}
+		// console.log(
+		// 	`mousedown x: ${options.target.left}, y: ${options.target.top}`
+		// )
 	})
 
-	t.on("editing:entered", (options) => {
+	t.on("moved", () => {
+		// console.log("moved")
+		// // @ts-expect-error
+		// t.vwb_moved = true
+
+		checkViewportBoundaries(canvas, t)
+
+		const pX = t.left
+		const pY = t.top
+
+		console.log(`Text Moved2 - pX: ${pX}, pY: ${pY}`)
+		console.log("TODO Send new position to backend...")
+	})
+
+	t.on("editing:entered", () => {
 		// console.log("Editing Entered.")
 
 		// @ts-expect-error
 		t.vwb_currentContent = t.text
 	})
 
-	t.on("editing:exited", (options) => {
+	t.on("editing:exited", () => {
 		// console.log("Editing exited.")
 
 		// @ts-expect-error

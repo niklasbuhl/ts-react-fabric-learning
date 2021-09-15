@@ -7,24 +7,47 @@ export const ToolBox: React.FC<Props> = () => {
 	const { tool, setTool } = useContext(ToolContext)
 
 	return (
-		<>
-			<button onClick={() => setTool(Tool.NewText)}>New Text</button>
-			<button onClick={() => setTool(Tool.NewImage)}>New Image from URL</button>
+		<div className="d-flex">
+			<button
+				className="btn button-primary"
+				onClick={() => setTool(Tool.NewText)}>
+				New Text
+			</button>
+			<button
+				className="btn button-primary"
+				onClick={() => setTool(Tool.NewImage)}>
+				New Image from URL
+			</button>
 
-			<button disabled={tool === Tool.Draw} onClick={() => setTool(Tool.Draw)}>
+			<button
+				className="btn button-primary"
+				disabled={tool === Tool.Draw}
+				onClick={() => setTool(Tool.Draw)}>
 				Draw
 			</button>
-			<button disabled={tool === Tool.Edit} onClick={() => setTool(Tool.Edit)}>
+			<button
+				className="btn button-primary"
+				disabled={tool === Tool.Edit}
+				onClick={() => setTool(Tool.Edit)}>
 				Edit
 			</button>
 			<button
+				className="btn button-primary"
 				disabled={tool === Tool.Delete}
 				onClick={() => setTool(Tool.Delete)}>
 				Delete
 			</button>
-			<button onClick={() => setTool(Tool.Refresh)}>Refresh</button>
-			<button onClick={() => setTool(Tool.SendToBack)}>Send to Back</button>
-		</>
+			<button
+				className="btn button-primary"
+				onClick={() => setTool(Tool.Refresh)}>
+				Refresh
+			</button>
+			{/* <button
+				className="btn button-primary"
+				onClick={() => setTool(Tool.SendToBack)}>
+				Send to Back
+			</button> */}
+		</div>
 	)
 }
 
