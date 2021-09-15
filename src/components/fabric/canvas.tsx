@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react"
 import addImageURL from "./addImage"
 // import canvasContext from "./canvasContext"
 import addIText from "./addIText"
+import editPath, { addPath } from "./path"
 import { Tool, ToolContext } from "./toolContext"
 
 const Canvas = () => {
@@ -13,7 +14,7 @@ const Canvas = () => {
 
 	// Tool Action
 	useEffect(() => {
-		console.log(tool)
+		// console.log(tool)
 
 		if (canvas) {
 			switch (tool) {
@@ -117,11 +118,11 @@ const Canvas = () => {
 
 			// @ts-expect-error
 			if (opt.path) {
-				// Path Array
 				// @ts-expect-error
-				console.log(opt.path.path)
+				editPath(opt.path)
 
-				console.log("TODO Save new path to backend...")
+				// @ts-expect-error
+				uploadPath(opt.path)
 			}
 		})
 
@@ -132,10 +133,8 @@ const Canvas = () => {
 		setCanvas(c)
 	}, [])
 
-	// Add Text
+	// Add Test Items
 	useEffect(() => {
-		// console.log("Adding Text 2.")
-
 		// Test Items
 		if (canvas) {
 			// Text
@@ -169,6 +168,10 @@ const Canvas = () => {
 			// https://www.pngall.com/wp-content/uploads/2016/07/Sun-Download-PNG.png
 
 			// Path
+			const pathStr =
+				"M519.999,112.999,Q520,113,520.5,115.5,Q521,118,521.5,120.5,Q522,123,525.5,136.5,Q529,150,530.5,160,Q532,170,532.5,180,Q533,190,531.5,207.5,Q530,225,525.5,233.5,Q521,242,508.5,259,Q496,276,486.5,287.5,Q477,299,463,317,Q449,335,441.5,341,L433.999,347.001"
+
+			addPath(canvas, pathStr)
 		}
 		// if (canvas) addIText(canvas)
 		// if (canvas) console.log(canvas.getObjects())
