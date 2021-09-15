@@ -1,3 +1,5 @@
+// TODO Problem when objects are almost as large as the bounding box...
+
 const checkViewportBoundaries = (
 	canvas: fabric.Canvas,
 	object: fabric.Object
