@@ -1,7 +1,7 @@
-import Coords from "../../types/coords"
 import { fabric } from "fabric"
 import testImageURL from "./functions/testImageURL"
 import checkViewportBoundaries from "./functions/checkViewportBoundaries"
+import Coords from "../../types/type.coords"
 
 const addImageURL = async (
 	canvas: fabric.Canvas,
@@ -19,11 +19,14 @@ const addImageURL = async (
 		fabric.Image.fromURL(
 			url,
 			(img) => {
-				// Add Functions
+				// Scale Image to fit inside the canvas
 				img.scale(0.5)
 
+				// Add id
 				// @ts-expect-error
-				img._id = _id
+				img.vwb_id = _id
+
+				// Add Functions
 
 				// Moved
 				img.on("moved", () => {
@@ -43,31 +46,6 @@ const addImageURL = async (
 					console.log(`Image scale sX: ${scaleX}, sY: ${scaleY}`)
 					console.log("TODO Send update to backend...")
 				})
-
-				// Mouse Up
-				/*
-			img.on("mouseup", (opt) => {
-				console.log("Image Mouseup")
-				console.log(opt)
-			})
-      */
-
-				// Mousedown
-				/*
-			img.on("mousedown", (opt) => {
-				if (opt.target) {
-					var x = opt.target.left as number
-					var y = opt.target.top as number
-
-					console.log(`pX: ${x}, pY: ${y}`)
-
-					const scaleX = opt.target.scaleX
-					const scaleY = opt.target.scaleY
-
-					console.log(`sX: ${scaleX}, sY: ${scaleY}`)
-				}
-			})
-      */
 
 				// console.log(img)
 

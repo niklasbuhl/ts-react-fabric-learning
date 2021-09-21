@@ -1,5 +1,5 @@
 import { fabric } from "fabric"
-import Coords from "../../types/coords"
+import Coords from "../../types/type.coords"
 import checkViewportBoundaries from "./functions/checkViewportBoundaries"
 
 const addIText = (
